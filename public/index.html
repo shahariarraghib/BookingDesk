@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Booking Desk</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">BOOKING SYSTEM</p>
+          <h1>Find your next seat.</h1>
+        </div>
+        <a class="docs-link" href="/api-docs" target="_blank" rel="noreferrer"
+          >API docs <span>↗</span></a
+        >
+      </header>
+
+      <section class="hero-panel">
+        <div>
+          <p class="kicker">Now showing</p>
+          <h2>Choose a show,<br /><em>make it yours.</em></h2>
+          <p class="hero-copy">
+            Browse live shows and check available seats in a few clicks.
+          </p>
+        </div>
+        <div class="hero-mark" aria-hidden="true">
+          <span>01</span><span>02</span><span>03</span>
+        </div>
+      </section>
+
+      <section class="workspace">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">01 / DISCOVER</p>
+            <h2>Available shows</h2>
+          </div>
+          <button id="refresh-shows" class="button button-dark" type="button">
+            Refresh <span>↻</span>
+          </button>
+        </div>
+        <div id="status" class="status" role="status">Loading shows...</div>
+        <div id="shows" class="show-grid"></div>
+      </section>
+
+      <section class="booking-panel" aria-labelledby="booking-title">
+        <div class="section-head compact">
+          <div>
+            <p class="eyebrow">02 / SEATS</p>
+            <h2 id="booking-title">Pick a show first</h2>
+          </div>
+          <span id="seat-count" class="count-badge">0 selected</span>
+        </div>
+        <div id="seat-status" class="status muted">
+          Select “View seats” on a show to continue.
+        </div>
+        <div id="seats" class="seat-grid"></div>
+        <div class="booking-action">
+          <div>
+            <span class="total-label">Selection total</span
+            ><strong id="total">৳0</strong>
+          </div>
+          <button
+            id="book-button"
+            class="button button-accent"
+            type="button"
+            disabled
+          >
+            Continue booking <span>→</span>
+          </button>
+        </div>
+      </section>
+
+      <footer>
+        <span>Booking Desk</span><span>Powered by your existing API</span>
+      </footer>
+    </main>
+    <script src="/app.js"></script>
+  </body>
+</html>

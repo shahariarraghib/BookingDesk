@@ -1,0 +1,86 @@
+const { Worker } = require("bullmq");
+
+const Seat = require("../modules/seat/seat.model");
+const Booking = require("../modules/booking/booking.model");
+const AppError = require("../common/utils/global.error");
+const mongoose = require("mongoose");
+const logger = require("../common/logger/logger");
+const { redisClient, redisConnection } = require("../config/redis.config");
+
+const worker = new Worker(
+  "bookingQueue",
+  async (job) => {
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
+    try {
+      const { bookingId } = job.data;
+      console.log(`processing booking : ${bookingId}`);
+
+      const booking = await Booking.findById(bookingId).session(session);
+      if (!booking) {
+        throw new AppError("booking not found", 404);
+      }
+
+      await Seat.updateMany(
+        {
+          seatNumber: { $in: booking.seats },
+          showId: booking.showId,
+        },
+        {
+          $set: {
+            isBooked: true,
+            isLocked: false,
+            lockedBy: null,
+            lockExpiresAt: null,
+          },
+        },
+        {
+          session,
+        },
+      );
+
+      await Booking.findOneAndUpdate(
+        {
+          _id: bookingId,
+        },
+        {
+          $set: {
+            bookingStatus: "CONFIRMED",
+          },
+        },
+        {
+          new: true,
+          session,
+        },
+      );
+
+      console.log(`Booking confirmed: ${bookingId}`);
+      await session.commitTransaction();
+
+      await redisClient.del(`show:${booking.showId}:available-seats`);
+    } catch (err) {
+      await session.abortTransaction();
+      throw err;
+    } finally {
+      await session.endSession();
+    }
+  },
+  {
+    connection: redisConnection,
+  },
+);
+
+worker.on("completed", (job) => {
+  console.log(`job ${job.id} completed`);
+});
+
+worker.on("failed", (job, err) => {
+  logger.error({
+    jobId: job.id,
+    bookingId: job.data.bookingId,
+    queue: job.queueName,
+    error: err.message,
+  });
+  console.log(`Job failed: ${err.message}`);
+});
