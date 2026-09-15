@@ -4,7 +4,6 @@ A production-inspired booking system built with a **module-based architecture**,
 
 This project focuses on **backend engineering fundamentals + advanced system design concepts**, making it ideal for backend interviews.
 
-
 🚀 Tech Stack
 
 - **Backend:** Node.js, Express
@@ -20,7 +19,6 @@ This project focuses on **backend engineering fundamentals + advanced system des
 
 This project follows a **feature/module-based architecture**, where each domain is self-contained.
 
-
 src/
 ├── config/
 ├── modules/
@@ -35,18 +33,19 @@ src/
 ├── app.js
 ├── server.js
 
-
 ---
 
 ## 📌 Features
 
 ### ✅ Core Features
+
 - Search available shows
 - View seat availability
 - Lock seats temporarily
 - Book tickets
 
 ### ⚙️ Advanced Backend Features
+
 - Distributed locking using Redis
 - Queue-based booking system (BullMQ)
 - Retry mechanism for failed jobs
@@ -56,6 +55,7 @@ src/
 - MongoDB transactions (data consistency)
 
 ### 📊 Production-Level Features
+
 - Structured logging system
 - Monitoring (latency & failures)
 - Caching (show list, seat availability)
@@ -94,6 +94,7 @@ src/
 This project follows a **21-day structured plan**:
 
 ### Week 1 → Foundation
+
 - System design
 - Project setup
 - Core models
@@ -101,6 +102,7 @@ This project follows a **21-day structured plan**:
 - Seat locking
 
 ### Week 2 → Advanced Backend
+
 - Booking flow
 - Payment simulation
 - Queue integration (BullMQ)
@@ -110,6 +112,7 @@ This project follows a **21-day structured plan**:
 - Transactions
 
 ### Week 3 → Production Level
+
 - Logging system
 - Monitoring
 - Caching
@@ -123,6 +126,7 @@ This project follows a **21-day structured plan**:
 ## 🧪 Running the Project
 
 ### 1. Clone the repo
+
 ```bash
 git clone https://github.com/your-username/booking-system.git
 cd booking-system
@@ -157,7 +161,5 @@ Real-world backend architecture
 Handling concurrency at scale
 Production-level thinking
 Strong system design fundamentals
-👨‍💻 Author
 
-Harsh Vardhan
-Aspiring Backend Engineer
+```
